@@ -2,13 +2,11 @@ package ru.dumdumbich.steward.ui.screen.demo
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,72 +31,54 @@ import ru.dumdumbich.steward.ui.theme.StewardTheme
 
 @Composable
 fun DemoScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Yellow)
-    ) {
+//    Box(Modifier.fillMaxSize().clip(CutCornerShape(30.dp)).background(Color.Blue))
+    Box(modifier = Modifier.fillMaxSize().background(Color.LightGray)) {
+        TextCell("TopStart", Modifier.align(Alignment.TopStart))
+        TextCell("TopCenter", Modifier.align(Alignment.TopCenter))
+        TextCell("TopEnd", Modifier.align(Alignment.TopEnd))
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .weight(weight = 0.2f, fill = true)
-                .background(Color.Green)
-        ) {
-            TextCell(
-                text = "1",
-                modifier = Modifier
-                    .background(Color.Gray)
-            )
-        }
+        TextCell("CenterStart", Modifier.align(Alignment.CenterStart))
+        TextCell("Center", Modifier.align(Alignment.Center))
+        TextCell("CenterEnd", Modifier.align(Alignment.CenterEnd))
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .weight(weight = 0.4f, fill = true)
-                .background(Color.Cyan)
-        ) {
-            TextCell(
-                text = "2",
-                modifier = Modifier
-                    .background(Color.Gray)
-            )
-        }
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .weight(weight = 0.3f, fill = true)
-                .background(Color.Magenta)
-        ) {
-            TextCell(
-                text = "3",
-                modifier = Modifier
-                    .background(Color.Gray)
-            )
-        }
-
+        TextCell("BottomStart", Modifier.align(Alignment.BottomStart))
+        TextCell("BottomCenter", Modifier.align(Alignment.BottomCenter))
+        TextCell("BottomEnd", Modifier.align(Alignment.BottomEnd))
     }
 }
 
 @Composable
-fun TextCell(text: String, modifier: Modifier = Modifier) {
+fun TextCell(text: String, modifier: Modifier = Modifier, fontSize: Int = 15) {
 
+    val cellShape = RoundedCornerShape(15.dp)
     val cellModifier = Modifier
+        .background(Color.LightGray)
         .padding(4.dp)
-        .fillMaxWidth()
-        .border(width = 4.dp, color = Color.Black)
-        .padding(10.dp)
-        .clip(shape = RoundedCornerShape(20.dp))
-        .size(100.dp, 100.dp)
+/*
+        .border(
+            width = 5.dp,
+            color = Color.Black,
+            shape = cellShape
+        )
+*/
+        .clip(shape = cellShape)
+        .background(Color.Gray)
+        .padding(15.dp)
+        //.background(Color.Black)
 
-    Text(
-        text = text,
-        modifier = cellModifier.then(modifier),
-        fontSize = 70.sp,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center
-    )
+
+    Surface(
+        modifier = modifier
+    ) {
+        Text(
+            text = text,
+            modifier = cellModifier,
+            fontSize = fontSize.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            color = Color.White
+        )
+    }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
