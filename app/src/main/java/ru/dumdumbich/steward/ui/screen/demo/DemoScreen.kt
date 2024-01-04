@@ -1,23 +1,20 @@
 package ru.dumdumbich.steward.ui.screen.demo
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 import ru.dumdumbich.steward.ui.theme.StewardTheme
 
 /**
@@ -31,54 +28,71 @@ import ru.dumdumbich.steward.ui.theme.StewardTheme
 
 @Composable
 fun DemoScreen() {
-//    Box(Modifier.fillMaxSize().clip(CutCornerShape(30.dp)).background(Color.Blue))
-    Box(modifier = Modifier.fillMaxSize().background(Color.LightGray)) {
-        TextCell("TopStart", Modifier.align(Alignment.TopStart))
-        TextCell("TopCenter", Modifier.align(Alignment.TopCenter))
-        TextCell("TopEnd", Modifier.align(Alignment.TopEnd))
-
-        TextCell("CenterStart", Modifier.align(Alignment.CenterStart))
-        TextCell("Center", Modifier.align(Alignment.Center))
-        TextCell("CenterEnd", Modifier.align(Alignment.CenterEnd))
-
-        TextCell("BottomStart", Modifier.align(Alignment.BottomStart))
-        TextCell("BottomCenter", Modifier.align(Alignment.BottomCenter))
-        TextCell("BottomEnd", Modifier.align(Alignment.BottomEnd))
-    }
+    ColumnList()
+    //RowList()
 }
 
 @Composable
-fun TextCell(text: String, modifier: Modifier = Modifier, fontSize: Int = 15) {
+fun ColumnList() {
 
-    val cellShape = RoundedCornerShape(15.dp)
-    val cellModifier = Modifier
-        .background(Color.LightGray)
-        .padding(4.dp)
-/*
-        .border(
-            width = 5.dp,
-            color = Color.Black,
-            shape = cellShape
-        )
-*/
-        .clip(shape = cellShape)
-        .background(Color.Gray)
-        .padding(15.dp)
-        //.background(Color.Black)
+    val scrollState = rememberScrollState()
+    val coroutineScope = rememberCoroutineScope()
 
+    Column {
 
-    Surface(
-        modifier = modifier
-    ) {
-        Text(
-            text = text,
-            modifier = cellModifier,
-            fontSize = fontSize.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            color = Color.White
-        )
+        Row {
+            Button(onClick = {
+                coroutineScope.launch {
+                    scrollState.animateScrollTo(0)
+                }
+            },
+                modifier = Modifier
+                    .weight(0.5f)
+                    .padding(2.dp)) {
+                Text("Top")
+            }
+
+            Button(onClick = {
+                coroutineScope.launch {
+                    scrollState.animateScrollTo(scrollState.maxValue)
+                }
+            },
+                modifier = Modifier
+                    .weight(0.5f)
+                    .padding(2.dp)) {
+                Text("End")
+            }
+        }
+
+        Column(
+            Modifier.verticalScroll(scrollState)
+        ) {
+            repeat(500) {
+                Text(
+                    "List Item $it",
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(5.dp)
+                )
+            }
+        }
+
     }
+
+}
+
+@Composable
+fun RowList() {
+
+    val scrollState = rememberScrollState()
+
+    Row(Modifier.horizontalScroll(scrollState)) {
+        repeat(50) {
+            Text(" $it ",
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier.padding(5.dp))
+        }
+    }
+
 }
 
 @Preview(showBackground = true, showSystemUi = true)
