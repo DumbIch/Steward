@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import ru.dumdumbich.steward.ui.screen.demo.DemoScreen
+import ru.dumdumbich.steward.ui.screen.demo.DemoScreenSetup
 import ru.dumdumbich.steward.ui.theme.StewardTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    DemoScreen()
+                    DemoScreenSetup()
                 }
             }
         }
