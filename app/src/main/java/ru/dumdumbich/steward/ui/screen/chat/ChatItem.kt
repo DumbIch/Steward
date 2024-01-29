@@ -16,23 +16,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ru.dumdumbich.steward.domain.entity.Post
 import ru.dumdumbich.steward.ui.theme.StewardTheme
 
 /**
  * <h3>Steward</h3>
  * @File : ChatItem
  * @description
- * <p>Chat item: message</p>
+ * <p>Chat item: post card</p>
  * @author DumbIch
  * @date 2024-01-13 16:37
  **/
-
-
-data class Post(
-    val timestamp: String,
-    val source: String,
-    val message: String
-)
 
 @Composable
 fun ChatItem(item: Post, showMessage: (String) -> Unit) {

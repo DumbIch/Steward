@@ -1,4 +1,4 @@
-package ru.dumdumbich.steward
+package ru.dumdumbich.steward.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

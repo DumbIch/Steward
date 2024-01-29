@@ -1,87 +1,32 @@
-package ru.dumdumbich.steward.ui.screen.chat
+package ru.dumdumbich.steward.data.datasource
 
-import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.koinViewModel
+import ru.dumdumbich.steward.domain.datasource.ChatLogDataSource
 import ru.dumdumbich.steward.domain.entity.Post
-import ru.dumdumbich.steward.ui.component.InputTextView
-import ru.dumdumbich.steward.ui.component.OutputListView
-import ru.dumdumbich.steward.ui.theme.StewardTheme
 
 /**
  * <h3>Steward</h3>
- * @File : ChatScreen
+ * @File : ChatLogDataSourceImpl
  * @description
- * <p>Chat screen compose component</p>
+ * <p>Data source implementation: Chat log</p>
  * @author DumbIch
- * @date 2024-01-13 14:59
+ * @date 2024-01-21 00:04
  **/
+class ChatLogDataSourceImpl() : ChatLogDataSource {
+    override fun getPost():Post {
+        return getFakePost()
+    }
 
+    override fun getPostsArray():Array<Post> {
+        return getFakePostsList()
+    }
 
-@Composable
-fun ChatScreenSetup(viewModel: ChatViewModel = koinViewModel()) {
-    ChatScreen(
-        postArray = viewModel.chatArray,
-        chatMessage = viewModel.messageState,
-        onMessageChangeHandler = { viewModel.onMessageChangeHandler(it) },
-        onMessageSendHandler = { viewModel.onMessageSendHandler(it) }
+    private fun getFakePost() = Post(
+        timestamp = "01.01.2024 17:54",
+        source = "Bad Room",
+        message = "Temperature less then setting value"
     )
-}
 
-
-@Composable
-fun ChatScreen(
-    postArray: Array<out Post>,
-    chatMessage: String,
-    onMessageChangeHandler: (String) -> Unit,
-    onMessageSendHandler: (String) -> String
-    //onMessageSendHandler: () -> Unit
-) {
-
-    // WARNING: must be deleted after debugging is complete
-    val context = LocalContext.current
-    val showToastMessage = { text: String ->
-        Toast.makeText(
-            context,
-            text,
-            Toast.LENGTH_SHORT
-        ).show()
-    }
-
-    Column(
-        verticalArrangement = Arrangement.Bottom,
-        modifier = Modifier
-            .padding(4.dp)
-            .fillMaxSize()
-    ) {
-        OutputListView(
-            list = postArray,
-            // WARNING: must be deleted after debugging is complete
-            showMessage = showToastMessage,
-            modifier = Modifier.weight(1F)
-        )
-        InputTextView(
-            message = chatMessage,
-            onMessageChange = onMessageChangeHandler,
-            onMessageSend = onMessageSendHandler,
-            // WARNING: must be deleted after debugging is complete
-            showMessage = showToastMessage
-        )
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ChatScreenPreview() {
-    val postArray: Array<Post> = arrayOf(
+    private fun getFakePostsList() = arrayOf(
         Post(
             timestamp = "01.01.2024 17:54",
             source = "Bad Room",
@@ -189,7 +134,4 @@ fun ChatScreenPreview() {
         ),
     )
 
-    StewardTheme {
-        ChatScreen(postArray, "", {}, {""})
-    }
 }

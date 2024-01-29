@@ -50,9 +50,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain"))
+    implementation(project(":data"))
 
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
 
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
@@ -61,7 +62,18 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    val lifecycleVersion = "2.7.0"
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
+
+    val koinVersion = "3.5.3"
+    implementation("io.insert-koin:koin-core:$koinVersion")
+    implementation("io.insert-koin:koin-android:$koinVersion")
+    implementation("io.insert-koin:koin-androidx-compose:$koinVersion")
+    testImplementation("io.insert-koin:koin-test:$koinVersion")
+    testImplementation("io.insert-koin:koin-test-junit4:$koinVersion")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

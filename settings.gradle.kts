@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "Steward"
 include(":app")
- 
+include(":data")
+include(":domain")
